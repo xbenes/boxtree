@@ -63,7 +63,7 @@ public class BoxTree {
         for (Box child: boxes) {
             CollideResult cr = sphereSet.collidesWith(child);
             // add child only if there is an intersection
-            if (cr.state == SphereSet.INSIDE) {
+            if (cr.state == CollideResult.INSIDE) {
                 // add volume
                 ctx.addVolume(child.getVolume());
                 // add child if tree is to be built
@@ -72,7 +72,7 @@ public class BoxTree {
                     node.addChild(childItem);
                 }
                 // ... and do not split again
-            } else if (cr.state == SphereSet.INTERSECT) {
+            } else if (cr.state == CollideResult.INTERSECT) {
                 BoxTreeItem childItem = new BoxTreeItem(child);
                 // add child if tree is to be built
                 if (ctx.getConstructTree())

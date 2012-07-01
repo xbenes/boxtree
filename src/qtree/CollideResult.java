@@ -5,7 +5,13 @@ package qtree;
  * state but also the sphereset of related spheres.
  * @author Petr Benes
  */
+
 public class CollideResult {
+    // constants for state representation
+    public static int INSIDE = 0;
+    public static int INTERSECT = 1;
+    public static int OUTSIDE = 2;
+
     public final int state;
     public final SphereSet sphereSet;
 

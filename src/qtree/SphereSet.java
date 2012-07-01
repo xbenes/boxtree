@@ -14,11 +14,6 @@ public class SphereSet {
     // base set
     private List<Vector4f> spheres = new ArrayList<Vector4f>();
 
-    // constants
-    public static int INSIDE = 0;
-    public static int INTERSECT = 1;
-    public static int OUTSIDE = 2;
-    
     /**
      * Add sphere to the set
      * @param sphere sphere to be added
@@ -57,14 +52,14 @@ public class SphereSet {
     public CollideResult collidesWith(Box b) {
 
         // outside by default
-        int state = SphereSet.OUTSIDE;
+        int state = CollideResult.OUTSIDE;
         SphereSet ss = new SphereSet();
         
         for (Vector4f sph : this.spheres) {
             if (b.inside(sph)) {
-                state = SphereSet.INSIDE;
-            } else if (b.intersect(sph) && state != SphereSet.INSIDE) {
-                state = SphereSet.INTERSECT;
+                state = CollideResult.INSIDE;
+            } else if (b.intersect(sph) && state != CollideResult.INSIDE) {
+                state = CollideResult.INTERSECT;
                 ss.addSphere(sph);
             }
         }
