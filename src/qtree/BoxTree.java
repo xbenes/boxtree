@@ -37,7 +37,8 @@ public class BoxTree {
      */
     public void split(Context ctx) {
         int level = 0;
-        this.split(this.root, ctx, level);
+        // start from root node, 0 level and use complete sphere set
+        this.split(this.root, ctx, level, this.sphereSet);
     }
 
     /**
@@ -46,8 +47,9 @@ public class BoxTree {
      * @param node the item which is to be split
      * @param ctx shared ctx object
      * @param level level at which we are currently splitting
+     * @param sphereSet if convenient, only a subset may be used for more effective split
      */
-    private void split(BoxTreeItem node, Context ctx, int level) {
+    private void split(BoxTreeItem node, Context ctx, int level, SphereSet sphereSet) {
         // do not nest deeper
         if (level > ctx.getMaxLevel()) {
             // no nest deeper, still use this box's volume (overestimate)
@@ -59,9 +61,9 @@ public class BoxTree {
         Box[] boxes = b.split8();
 
         for (Box child: boxes) {
-            int collideResult = this.sphereSet.collidesWith(child);
+            CollideResult cr = sphereSet.collidesWith(child);
             // add child only if there is an intersection
-            if (collideResult == SphereSet.INSIDE) {
+            if (cr.state == SphereSet.INSIDE) {
                 // add volume
                 ctx.addVolume(child.getVolume());
                 // add child if tree is to be built
@@ -69,16 +71,19 @@ public class BoxTree {
                     BoxTreeItem childItem = new BoxTreeItem(child);
                     node.addChild(childItem);
                 }
-            } else if (collideResult == SphereSet.INTERSECT) {
+                // ... and do not split again
+            } else if (cr.state == SphereSet.INTERSECT) {
                 BoxTreeItem childItem = new BoxTreeItem(child);
                 // add child if tree is to be built
                 if (ctx.getConstructTree())
                     node.addChild(childItem);
                 // nest deeper only if the item is NOT FULLY contained within
                 // one of the spheres in the sphereset
-                this.split(childItem, ctx, level + 1);
+                this.split(childItem, ctx, level + 1, cr.sphereSet);
             } else {
-                // outside
+                // outside:
+                // nothing to add, nothing to do, no need to distinguisj
+                // complete/restricted sphere set and also no need to split again
             }
         }
     }
@@ -86,6 +91,8 @@ public class BoxTree {
     // compute volume of the whole tree
     // if, during the split, the tree was not constructed, the returned value is
     // the volume of the whole bounding box (no child nodes present)
+    // NOTE: this method works only if split with tree construction was run before
+    //       therefore use volume gathered in ctx object during split instead
     @Deprecated
     public float computeVolume() {
         return this.computeVolume(this.root);

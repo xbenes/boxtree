@@ -51,18 +51,25 @@ public class SphereSet {
     /**
      * Determine whether any of the spheres collides with the box given
      * @param b box to be tested
-     * @return 
-     *   SphereSet.INISIDE if the box is contained within any of the spheres
-     *   SphereSet.OUTSIDE if the box does not intersect any of the spheres
-     *   SphereSet.INTERSECT if the box intersects any of the spheres
+     * @return the collide result. If there is intersection (not complete inclusion nor outside)
+     *         the subset of spheres which participate in the intersection are returned
      */
-    public int collidesWith(Box b) {
+    public CollideResult collidesWith(Box b) {
+
+        // outside by default
+        int state = SphereSet.OUTSIDE;
+        SphereSet ss = new SphereSet();
+        
         for (Vector4f sph : this.spheres) {
-            if (b.inside(sph))
-                return SphereSet.INSIDE;
-            else  if (b.intersect(sph))
-                return SphereSet.INTERSECT;
+            if (b.inside(sph)) {
+                state = SphereSet.INSIDE;
+            } else if (b.intersect(sph) && state != SphereSet.INSIDE) {
+                state = SphereSet.INTERSECT;
+                ss.addSphere(sph);
+            }
         }
-        return SphereSet.OUTSIDE;
+        
+        CollideResult cr = new CollideResult(state, ss);
+        return cr;
     }
 }

@@ -6,20 +6,22 @@ import javax.vecmath.Vector4f;
  * Test file and example
  * @author Petr Benes
  */
-public class Test {
+public class SimpleTest {
 
     public static void main(String[] args) {
         SphereSet ss = new SphereSet();
-        for (int i = 0; i < 1000; i++) {
-            Vector4f sphere = new Vector4f(
-                        (float) Math.random()*50,
-                        (float) Math.random()*50,
-                        (float) Math.random()*50,
-                        1
-                        //  0,0,0,1
-                    );
+        for (int i = 0; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
+                Vector4f sphere = new Vector4f(
+                            (float) i,
+                            (float) j,
+                            (float) 0,
+                            0.1f
+                            //  0,0,0,1
+                        );
 
-            ss.addSphere(sphere);
+                ss.addSphere(sphere);
+            }
         }
 
         BoxTree bt = new BoxTree(ss);
@@ -31,9 +33,9 @@ public class Test {
         // volume computed via bt.computeVolume returns the volume of the bounding box
         // gathered volume is computed correctly
         ctx.setConstructTree(false);
-        ctx.setMaxLevel(6);
+        ctx.setMaxLevel(12);
         bt.split(ctx);
-        float volume = bt.computeVolume();
-        System.out.println("volume: " + volume + " gathered: " + ctx.getVolume());
+        System.out.println("volume gathered: " + ctx.getVolume());
+
     }
 }
