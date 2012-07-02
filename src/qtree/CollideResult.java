@@ -1,7 +1,7 @@
 package qtree;
 
 /**
- * The object which encapsulates collision result. Contains not only the resulting 
+ * The object which encapsulates collision result. Contains not only the resulting
  * state but also the sphereset of related spheres.
  * @author Petr Benes
  */

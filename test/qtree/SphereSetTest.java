@@ -47,8 +47,8 @@ public class SphereSetTest {
         Box bb = instance.getBoundingBox();
 
         //  TODO: replace with exact sphere-in-box test
-        assertTrue(bb.intersect(v1));
-        assertTrue(bb.intersect(v2));
+        assertTrue(bb.intersectSphere(v1));
+        assertTrue(bb.intersectSphere(v2));
 
     }
 

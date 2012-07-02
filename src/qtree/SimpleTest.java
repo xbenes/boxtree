@@ -26,10 +26,10 @@ public class SimpleTest {
 
         BoxTree bt = new BoxTree(ss);
         Context ctx = new Context();
-        
+
         // should we build the tree or perform volume computation only
-        
-        // Note: if we don't build the tree, only first node is kept and the 
+
+        // Note: if we don't build the tree, only first node is kept and the
         // volume computed via bt.computeVolume returns the volume of the bounding box
         // gathered volume is computed correctly
         ctx.setConstructTree(false);

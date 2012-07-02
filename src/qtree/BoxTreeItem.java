@@ -10,7 +10,7 @@ import java.util.List;
 public class BoxTreeItem {
     private Box box;
     private List<BoxTreeItem> children = new ArrayList<BoxTreeItem>();
-    
+
     /**
      * Init BoxTreeItem
      * @param box the bounding box
@@ -18,7 +18,7 @@ public class BoxTreeItem {
     public BoxTreeItem(Box box) {
         this.box = box;
     }
-    
+
     /**
      * Add child to this item
      * @param boxItem the child to be added
@@ -33,7 +33,7 @@ public class BoxTreeItem {
     public Box getBox() {
         return this.box;
     }
-    
+
     /**
      * Whether the item has any children, i.e. is a leaf
      * @return whether the item is leaf
@@ -41,8 +41,8 @@ public class BoxTreeItem {
     public boolean isLeaf() {
         return this.children.isEmpty();
     }
-    
-    /** 
+
+    /**
      * Get all children of the item
      * @return all children
      */

@@ -13,7 +13,7 @@ public class BoxTree {
 
     /**
      * Init BoxTree as one box enclosing all the spheres
-     * @param s 
+     * @param s
      */
     public BoxTree(SphereSet s) {
         this.sphereSet = s;
@@ -29,9 +29,9 @@ public class BoxTree {
     public BoxTreeItem getRoot() {
         return this.root;
     }
-    
+
     /**
-     * Split the tree. 
+     * Split the tree.
      * Pass shared context through all levels of splitting
      * @param ctx shared context object
      */
@@ -97,7 +97,7 @@ public class BoxTree {
     public float computeVolume() {
         return this.computeVolume(this.root);
     }
-    
+
     /**
      * Compute the sum of volumes of all leaf nodes of a box tree item
      * @param node item to proceed with

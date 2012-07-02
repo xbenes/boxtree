@@ -14,10 +14,10 @@ import javax.vecmath.Vector4f;
 public class Box {
     private Vector3f min = new Vector3f();
     private Vector3f max = new Vector3f();
-    
+
     public Vector3f getMin() { return min; }
     public Vector3f getMax() { return max; }
-  
+
     /**
      * Init box and DO check that min is less or equal to max
      * @param min min corner
@@ -47,7 +47,7 @@ public class Box {
             System.err.println("!! Warning: bad bbox " + this.min.toString() + " " + this.max.toString());
         }
     }
-    
+
     /**
      * Update box min/max with given x/y/z coordinates
      * @param x x
@@ -58,12 +58,12 @@ public class Box {
         min.x = Math.min(x, min.x);
         min.y = Math.min(y, min.y);
         min.z = Math.min(z, min.z);
-        
+
         max.x = Math.max(x, max.x);
         max.y = Math.max(y, max.y);
         max.z = Math.max(z, max.z);
     }
-    
+
     /**
      * Point-inside box test
      * @param x point x
@@ -71,24 +71,24 @@ public class Box {
      * @param z point z
      * @return true if the point is inside a box
      */
-    public boolean intersect(float x, float y, float z) {
+    public boolean pointInside(float x, float y, float z) {
         return x <= max.x && y <= max.y && z <= max.z &&
                x >= min.x && y >= min.y && z >= min.z;
     }
-    
+
     /**
      * Split a box into eight boxes in the middle of each plane
      */
     public Box[] split8() {
         Box[] result = new Box[8];
-        
+
         float middlex = (min.x + max.x) / 2.f;
         float middley = (min.y + max.y) / 2.f;
         float middlez = (min.z + max.z) / 2.f;
-        
+
         Vector3f a1 = min;
         Vector3f a2 = new Vector3f(middlex, middley, middlez);
-        
+
         Vector3f b1 = new Vector3f(middlex, min.y, min.z);
         Vector3f b2 = new Vector3f(max.x, middley, middlez);
 
@@ -109,7 +109,7 @@ public class Box {
 
         Vector3f h1 = a2;
         Vector3f h2 = max;
-        
+
         result[0] = new Box(a1, a2);
         result[1] = new Box(b1, b2);
         result[2] = new Box(c1, c2);
@@ -118,7 +118,7 @@ public class Box {
         result[5] = new Box(f1, f2);
         result[6] = new Box(g1, g2);
         result[7] = new Box(h1, h2);
-        
+
         return result;
     }
 
@@ -137,13 +137,13 @@ public class Box {
             return false;
     }
     /**
-     * Test whether the box intersect a sphere
+     * Test whether the box pointInside a sphere
      * @param sphere sphere to be tested
      * @return true if there is an intersection, false otherwise
      */
-    public boolean intersect(Vector4f sphere) {
+    public boolean intersectSphere(Vector4f sphere) {
         // whether sphere center is in the box
-        if(this.intersect(sphere.x, sphere.y, sphere.z)) {
+        if(this.pointInside(sphere.x, sphere.y, sphere.z)) {
              return true;
         }
 
@@ -171,16 +171,16 @@ public class Box {
         //float fDcoll = sphere.w - fDist;
         // normal of collision (going towards the sphere centre)
         //float xNcoll = xDiff  / fDist;
-        //return true;    
+        //return true;
     }
-    
+
     /**
      * Get box volume
      */
     public float getVolume() {
         return (max.x - min.x) * (max.y - min.y) * (max.z - min.z);
     }
-    
+
     @Override
     public String toString() {
         return "[" + min.toString() + ", " + max.toString() + "]";

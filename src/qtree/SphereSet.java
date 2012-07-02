@@ -21,7 +21,7 @@ public class SphereSet {
     public void addSphere(Vector4f sphere) {
         spheres.add(sphere);
     }
-    
+
     /**
      * Get aabb of the set of spheres
      * @return bounding box
@@ -29,7 +29,7 @@ public class SphereSet {
     public Box getBoundingBox() {
         // create initial bounding box, and do not check that its min is less or equal to max
         Box b = new Box(
-                    new Vector3f(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE), 
+                    new Vector3f(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE),
                     new Vector3f(-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE),
                     false
                 );
@@ -42,7 +42,7 @@ public class SphereSet {
         }
         return b;
     }
-    
+
     /**
      * Determine whether any of the spheres collides with the box given
      * @param b box to be tested
@@ -54,16 +54,16 @@ public class SphereSet {
         // outside by default
         int state = CollideResult.OUTSIDE;
         SphereSet ss = new SphereSet();
-        
+
         for (Vector4f sph : this.spheres) {
             if (b.inside(sph)) {
                 state = CollideResult.INSIDE;
-            } else if (b.intersect(sph) && state != CollideResult.INSIDE) {
+            } else if (b.intersectSphere(sph) && state != CollideResult.INSIDE) {
                 state = CollideResult.INTERSECT;
                 ss.addSphere(sph);
             }
         }
-        
+
         CollideResult cr = new CollideResult(state, ss);
         return cr;
     }

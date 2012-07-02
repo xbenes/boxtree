@@ -59,7 +59,7 @@ public class BoxTest {
     }
 
     /**
-     * Test of intersect method, of class Box.
+     * Test of intersectSphere method, of class Box.
      */
     @Test
     public void testIntersect_3args() {
@@ -68,16 +68,16 @@ public class BoxTest {
             new Vector3f(1.f, 1.f, 1.f)
         );
 
-        assertEquals(instance.intersect(0.5f, 0.5f, 0.5f), true);
-        assertEquals(instance.intersect(0.0f, 1.0f, 1.0f), true);
-        assertEquals(instance.intersect(0.2f, 1.0f, 0.4f), true);
-        assertEquals(instance.intersect(0.3f, 0.0f, 0.0f), true);
+        assertEquals(instance.pointInside(0.5f, 0.5f, 0.5f), true);
+        assertEquals(instance.pointInside(0.0f, 1.0f, 1.0f), true);
+        assertEquals(instance.pointInside(0.2f, 1.0f, 0.4f), true);
+        assertEquals(instance.pointInside(0.3f, 0.0f, 0.0f), true);
 
-        assertEquals(instance.intersect(1.5f, 0.5f, 0.5f), false);
-        assertEquals(instance.intersect(0.5f, 1.5f, 0.5f), false);
-        assertEquals(instance.intersect(0.5f, 0.5f, 1.5f), false);
-        assertEquals(instance.intersect(1.1f, 1.1f, 1.1f), false);
-        assertEquals(instance.intersect(-2.1f, 0.1f, 2.1f), false);
+        assertEquals(instance.pointInside(1.5f, 0.5f, 0.5f), false);
+        assertEquals(instance.pointInside(0.5f, 1.5f, 0.5f), false);
+        assertEquals(instance.pointInside(0.5f, 0.5f, 1.5f), false);
+        assertEquals(instance.pointInside(1.1f, 1.1f, 1.1f), false);
+        assertEquals(instance.pointInside(-2.1f, 0.1f, 2.1f), false);
     }
 
     /**
@@ -125,7 +125,7 @@ public class BoxTest {
     }
 
     /**
-     * Test of intersect method, of class Box.
+     * Test of intersectSphere method, of class Box.
      */
     @Test
     public void testIntersect_Vector4f() {
@@ -138,9 +138,9 @@ public class BoxTest {
             new Vector3f(0.f, 0.f, 0.f),
             new Vector3f(4.f, 4.f, 4.f)
         );
-        assertTrue(b1.intersect(sph1));
-        assertTrue(b1.intersect(sph2));
-        assertTrue(!b1.intersect(sph3));
+        assertTrue(b1.intersectSphere(sph1));
+        assertTrue(b1.intersectSphere(sph2));
+        assertTrue(!b1.intersectSphere(sph3));
     }
 
     /**

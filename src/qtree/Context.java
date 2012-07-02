@@ -12,7 +12,7 @@ public class Context {
     private int maxLevel = 6;
     // initial computed volume. Default 0.
     private float volume = 0;
-    
+
     public void setConstructTree(boolean construct) {
         this.constructTree = construct;
     }
@@ -26,7 +26,7 @@ public class Context {
     public void setMaxLevel(int maxLevel) {
         this.maxLevel = maxLevel;
     }
-    
+
     /**
      * Add volume to current volume
      * @param v number to be added to currently stored volume
